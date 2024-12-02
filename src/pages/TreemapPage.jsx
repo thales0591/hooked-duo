@@ -11,7 +11,11 @@ function TreemapPage() {
 
     let newScale = scale + e.deltaY * -0.01;
     newScale = Math.min(Math.max(0.5, newScale), 3);
-    setScale(newScale);
+    if (scale == 0.5 && e.deltaY < 0) {
+      setScale(1);
+    } else {
+      setScale(newScale);
+    }
   };
 
   const handleMouseDown = (e) => {
@@ -40,100 +44,115 @@ function TreemapPage() {
   const handleMouseLeave = () => {
     setIsDragging(false);
   };
+  // cores da borderless:
+  // azul claro:#5316CC
+  // azul escuro:#1C194E
+  // verde claro: #2DEBB1
+  // verde escuro: #0A3A2E
 
+ 
   return (
-    <div
-      className="flex justify-center items-center h-screen bg-gray-100 overflow-hidden"
-      onWheel={handleWheel}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        cursor: isDragging ? "grabbing" : "grab",
-        transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-        transformOrigin: "center center",
-      }}
-    >
-      <div className="flex flex-col gap-16 bg-slate-500  items-center">
-        <div className="bg-red-500 w-48 h-16 rounded-xl">
-          <button>Arrays e hashing</button>
-        </div>
-
-        <div className="grid grid-cols-2 gap-10">
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>two pointers</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>stack</button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-10">
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>bynary search</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>sliding window</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>linked list</button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-10">
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-2">
-            <button>trees</button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-10">
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-1">
-            <button>tries</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-4">
-            <button>backtracking</button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-5 place-items-center gap-10">
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-2">
-            <button>heap</button>
+    <>
+      <div
+        className="flex justify-start items-center h-screen bg-[#151435] overflow-hidden "
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          cursor: isDragging ? "grabbing" : "grab",
+          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+          transformOrigin: "center center",
+        }}
+      >
+        <div className="flex flex-col gap-16  items-center text-white text-center font-roboto font-medium ">
+          <div
+            className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
+          >
+            <button>Arrays e hashing</button>
           </div>
 
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-4">
-            <button>graphs</button>
+          <div className="grid grid-cols-2 gap-10">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Two pointers</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Stack</button>
+            </div>
           </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-5">
-            <button>1d dp</button>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-6 gap-10 ">
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>intervals</button>
+          <div className="grid grid-cols-3 gap-10">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Bynary search</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Sliding window</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Linked list</button>
+            </div>
           </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>greedy</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl">
-            <button>advanced graphs</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-5">
-            <button>2d dp</button>
-          </div>
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-6">
-            <button>bit manipulation</button>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-4 gap-10">
-          <div className="bg-red-500 w-48 h-16 rounded-xl col-start-3">
-            <button>math e geometry</button>
+          <div className="grid grid-cols-4 gap-10">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-2">
+              <button>Trees</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 gap-10">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-1">
+              <button>Tries</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-4">
+              <button>Backtracking</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-5 place-items-center gap-10">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-2">
+              <button>Heap</button>
+            </div>
+
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-4">
+              <button>Graphs</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-5">
+              <button>1D DP</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-6 gap-10 ">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Intervals</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl">
+              <button>Greedy</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl ">
+              <button>Advanced graphs</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-5">
+              <button>2D DP</button>
+            </div>
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-6">
+              <button>Bit manipulation</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 gap-10">
+            <div className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-3">
+              <button>Math e geometry</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div className="fixed right-0 top-0 w-64 h-full bg-[#26236b] shadow-lg pointer-events-none text-white rounded-xl">
+        <p className="p-4">Coding</p>
+        <p className="p-4">progress bar aq man</p>
+      </div>
+      
+    </>
   );
 }
 
