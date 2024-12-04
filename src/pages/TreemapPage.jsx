@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Sidebar from "../components/Sidebar.jsx";
 
 function TreemapPage() {
   const [scale, setScale] = useState(1);
@@ -50,7 +51,14 @@ function TreemapPage() {
   // verde claro: #2DEBB1
   // verde escuro: #0A3A2E
 
- 
+  // Estado para controlar a visibilidade do elemento
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const [nomedahora, setNomedahora] = useState("");
+
+  // Função para alternar a visibilidade do elemento
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
   return (
     <>
       <div
@@ -69,8 +77,10 @@ function TreemapPage() {
         <div className="flex flex-col gap-16  items-center text-white text-center font-roboto font-medium ">
           <div
             className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
+            onClick={() => setNomedahora("eaii")}
           >
             <button>Arrays e hashing</button>
+            {isSidebarVisible && <h1>opa</h1>}
           </div>
 
           <div className="grid grid-cols-2 gap-10">
@@ -148,10 +158,11 @@ function TreemapPage() {
         </div>
       </div>
       <div className="fixed right-0 top-0 w-64 h-full bg-[#26236b] shadow-lg pointer-events-none text-white rounded-xl">
-        <p className="p-4">Coding</p>
+        <p className="p-4">{nomedahora}</p>
         <p className="p-4">progress bar aq man</p>
       </div>
-      
+      <Sidebar />
+      {/* <Sidebar/> */}
     </>
   );
 }
