@@ -1,3 +1,10 @@
+import PropTypes from "prop-types";
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
 const Checkbox = ({ checked, onChange }) => {
   return (
     <label className="relative flex items-center cursor-pointer">
@@ -9,7 +16,7 @@ const Checkbox = ({ checked, onChange }) => {
       />
       <div
         className={`w-6 h-6 border-2 rounded border-gray-400 flex items-center justify-center transition-all ${
-          checked ? "bg-green-500 border-green-500" : "bg-transparent"
+          checked ? "bg-[#2DEBB1] border-[#2DEBB1]" : "bg-transparent"
         }`}
       >
         {checked && (

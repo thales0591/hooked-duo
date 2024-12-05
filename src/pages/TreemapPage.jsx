@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Checkbox from "../components/Checkbox";
-import Star from "../components/Star";
+import Row from "../components/Row";
 
 function TreemapPage() {
   const [scale, setScale] = useState(1);
@@ -53,20 +52,17 @@ function TreemapPage() {
   // verde claro: #2DEBB1
   // verde escuro: #0A3A2E
 
-  const [text, setText] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleDynamicSidebar = (leafText) => {
+  const handleDynamicSidebar = () => {
     setIsOpen(!isOpen);
-    setText(leafText);
   };
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const [isChecked, setIsChecked] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+  
   return (
     <>
       <div
@@ -207,23 +203,7 @@ function TreemapPage() {
                 </div>
               </div>
 
-              <div className="flex flex-row mt-5 justify-around w-full border-b-2 pb-2 border-gray-500">
-                <div className="w-[50px]">
-                  <Checkbox checked={isChecked} onChange={setIsChecked} />
-                </div>
-
-                <div className="flex gap-52 w-[780px]">
-                  <div className="w-[30px] justify-center">
-                    <Star
-                      filled={isFilled}
-                      onClick={() => setIsFilled(!isFilled)}
-                    />
-                  </div>
-                  <h1 className="w-64">Probelam 001 de algoritmasdasos</h1>
-                  <h1 className="w-[65px]">Difficulty</h1>
-                </div>
-                <h1>solution</h1>
-              </div>
+              <Row problem={{name: "opa", difficulty: "easy"}}/>
             </div>
           </div>
         </div>
