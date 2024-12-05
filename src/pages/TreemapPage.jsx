@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Sidebar from "../components/Sidebar.jsx";
+import Checkbox from "../components/Checkbox";
+import Star from "../components/Star";
 
 function TreemapPage() {
   const [scale, setScale] = useState(1);
@@ -45,20 +46,27 @@ function TreemapPage() {
   const handleMouseLeave = () => {
     setIsDragging(false);
   };
+
   // cores da borderless:
   // azul claro:#5316CC
   // azul escuro:#1C194E
   // verde claro: #2DEBB1
   // verde escuro: #0A3A2E
 
-  // Estado para controlar a visibilidade do elemento
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-  const [nomedahora, setNomedahora] = useState("");
+  const [text, setText] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Função para alternar a visibilidade do elemento
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
+  const handleDynamicSidebar = (leafText) => {
+    setIsOpen(!isOpen);
+    setText(leafText);
   };
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const [isChecked, setIsChecked] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
   return (
     <>
       <div
@@ -77,10 +85,9 @@ function TreemapPage() {
         <div className="flex flex-col gap-16  items-center text-white text-center font-roboto font-medium ">
           <div
             className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-            onClick={() => setNomedahora("eaii")}
+            onClick={() => handleDynamicSidebar("falaa krlh")}
           >
             <button>Arrays e hashing</button>
-            {isSidebarVisible && <h1>opa</h1>}
           </div>
 
           <div className="grid grid-cols-2 gap-10">
@@ -158,10 +165,70 @@ function TreemapPage() {
         </div>
       </div>
       <div className="fixed right-0 top-0 w-64 h-full bg-[#26236b] shadow-lg pointer-events-none text-white rounded-xl">
-        <p className="p-4">{nomedahora}</p>
+        <p className="p-4">opa</p>
         <p className="p-4">progress bar aq man</p>
       </div>
-      <Sidebar />
+
+      <div className="relative">
+        <div
+          className={`fixed inset-0 bg-black bg-opacity-50 
+              ${
+                isOpen
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }`}
+          onClick={() => toggleSidebar()}
+        ></div>
+        <div
+          className={`fixed top-0 right-0 h-full w-3/4 bg-[#26236b] shadow-lg transform text-white transition-transform duration-300 ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col items-center ">
+            <h1>nome da leaf</h1>
+            <h1>progrss bar</h1>
+            <h1>pre requisites</h1>
+            <div className="w-[90%]">
+              <div className="flex flex-row mt-10 justify-around w-full border-b-2 pb-2 border-gray-500 ">
+                <div className="w-[50px]">
+                  <h1>Status</h1>
+                </div>
+
+                <div className="flex gap-52 w-[780px]">
+                <div className="w-[30px] justify-center">
+                    <h1>Star</h1>
+                  </div>
+                  <h1 className="w-64">Problem</h1>
+                  <h1 className="w-[65px]">Difficulty</h1>
+                </div>
+
+                <div className="w-[60px]">
+                  <h1>Solution</h1>
+                </div>
+              </div>
+
+              <div className="flex flex-row mt-5 justify-around w-full border-b-2 pb-2 border-gray-500">
+                <div className="w-[50px]">
+                  <Checkbox checked={isChecked} onChange={setIsChecked} />
+                </div>
+
+                <div className="flex gap-52 w-[780px]">
+                  <div className="w-[30px] justify-center">
+                    <Star
+                      filled={isFilled}
+                      onClick={() => setIsFilled(!isFilled)}
+                    />
+                  </div>
+                  <h1 className="w-64">Probelam 001 de algoritmasdasos</h1>
+                  <h1 className="w-[65px]">Difficulty</h1>
+                </div>
+                <h1>solution</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* <Sidebar/> */}
     </>
   );
