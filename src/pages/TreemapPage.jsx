@@ -54,7 +54,10 @@ function TreemapPage() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleDynamicSidebar = () => {
+  const [contentStack, setContentStack] = useState([]);
+
+  const handleDynamicSidebar = (content) => {
+    setContentStack(content);
     setIsOpen(!isOpen);
   };
 
@@ -62,7 +65,6 @@ function TreemapPage() {
     setIsOpen(!isOpen);
   };
 
-  
   return (
     <>
       <div
@@ -81,7 +83,14 @@ function TreemapPage() {
         <div className="flex flex-col gap-16  items-center text-white text-center font-roboto font-medium ">
           <div
             className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-            onClick={() => handleDynamicSidebar("falaa krlh")}
+            onClick={() =>
+              handleDynamicSidebar([
+                { title: "probelma 1", difficulty: "easy" },
+                { title: "pronelam 2", difficulty: "medium" },
+                { title: "probelm 3", difficulty: "medium" },
+                { title: "probelm 4", difficulty: "hard" },
+              ])
+            }
           >
             <button>Arrays e hashing</button>
           </div>
@@ -186,12 +195,12 @@ function TreemapPage() {
             <h1>pre requisites</h1>
             <div className="w-[90%]">
               <div className="flex flex-row mt-10 justify-around w-full border-b-2 pb-2 border-gray-500 ">
-                <div className="w-[50px]">
+                <div className="w-[43px]">
                   <h1>Status</h1>
                 </div>
 
                 <div className="flex gap-52 w-[780px]">
-                <div className="w-[30px] justify-center">
+                  <div className="w-[30px] justify-center">
                     <h1>Star</h1>
                   </div>
                   <h1 className="w-64">Problem</h1>
@@ -203,7 +212,10 @@ function TreemapPage() {
                 </div>
               </div>
 
-              <Row problem={{name: "opa", difficulty: "easy"}}/>
+              {contentStack.length > 0 &&
+                contentStack.map((item, index) => (
+                  <Row key={index} problem={item} />
+                ))}
             </div>
           </div>
         </div>

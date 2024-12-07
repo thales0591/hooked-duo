@@ -1,9 +1,6 @@
 import PropTypes from "prop-types";
 
-Star.propTypes = {
-  filled: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
+
 
 const Star = ({ filled, onClick }) => {
   return (
@@ -43,6 +40,11 @@ const Star = ({ filled, onClick }) => {
       )}
     </button>
   );
+};
+
+Star.propTypes = {
+  filled: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Star;
