@@ -2,6 +2,8 @@ import { useState } from "react";
 import Checkbox from "./Checkbox";
 import Star from "./Star";
 import PropTypes from "prop-types";
+import { FaVideo } from 'react-icons/fa';
+
 
 
 
@@ -14,18 +16,23 @@ const Row = ({ problem }) => {
         isChecked ? "bg-[#2DEBB1] bg-opacity-50" : ""
       } `}
     >
-      <div className="w-[43px]">
+      <div className="w-[43px] flex items-center">
         <Checkbox checked={isChecked} onChange={setIsChecked} />
       </div>
 
-      <div className="flex gap-52 w-[780px]">
+      <div className="flex gap-52 w-[780px] items-center">
         <div className=" justify-center box-border">
           <Star filled={isFilled} onClick={() => setIsFilled(!isFilled)} />
         </div>
         <h1 className="w-64">{problem.title}</h1>
-        <h1 className="w-[65px]">{problem.difficulty}</h1>
+        <h1 className={`w-[65px] flex justify-center items-center
+          ${problem.difficulty == 'Easy' && "text-green-400"}
+          ${problem.difficulty == 'Medium' && "text-yellow-400"}
+          ${problem.difficulty == 'Hard' && "text-red-500"}`}>{problem.difficulty}</h1>
       </div>
-      <h1>solution</h1>
+      <div className=" flex justify-center w-[60px] items-center">
+        <h1> <FaVideo className="w-6 h-6 cursor-pointer" /></h1>
+      </div>
     </div>
   );
 };
