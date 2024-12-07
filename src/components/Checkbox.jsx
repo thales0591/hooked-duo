@@ -1,13 +1,9 @@
 import PropTypes from "prop-types";
 
-Checkbox.propTypes = {
-  checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 
 const Checkbox = ({ checked, onChange }) => {
   return (
-    <label className="relative flex items-center cursor-pointer">
+    <label className="relative flex items-center cursor-pointer box-border w-[43px] justify-center">
       <input
         type="checkbox"
         className="hidden"
@@ -39,5 +35,11 @@ const Checkbox = ({ checked, onChange }) => {
     </label>
   );
 };
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+};
+
 
 export default Checkbox;

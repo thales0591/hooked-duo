@@ -3,12 +3,7 @@ import Checkbox from "./Checkbox";
 import Star from "./Star";
 import PropTypes from "prop-types";
 
-Row.propTypes = {
-    problem: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      difficulty: PropTypes.string.isRequired,
-    }).isRequired,
-};
+
 
 const Row = ({ problem }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -19,7 +14,7 @@ const Row = ({ problem }) => {
         isChecked ? "bg-[#2DEBB1] bg-opacity-50" : ""
       } `}
     >
-      <div className="w-[50px]">
+      <div className="w-[43px]">
         <Checkbox checked={isChecked} onChange={setIsChecked} />
       </div>
 
@@ -27,12 +22,19 @@ const Row = ({ problem }) => {
         <div className=" justify-center box-border">
           <Star filled={isFilled} onClick={() => setIsFilled(!isFilled)} />
         </div>
-        <h1 className="w-64">{problem.name}</h1>
+        <h1 className="w-64">{problem.title}</h1>
         <h1 className="w-[65px]">{problem.difficulty}</h1>
       </div>
       <h1>solution</h1>
     </div>
   );
+};
+
+Row.propTypes = {
+  problem: PropTypes.shape({
+    title: PropTypes.string,
+    difficulty: PropTypes.string,
+  }),
 };
 
 export default Row;
