@@ -4,10 +4,7 @@ import Star from "./Star";
 import PropTypes from "prop-types";
 import { FaVideo } from 'react-icons/fa';
 
-
-
-
-const Row = ({ problem }) => {
+const Row = ({ problem, parentProgress, setParentProgress, actualSize, setActualSize, maxSize, setMaxSize }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   return (
@@ -17,7 +14,14 @@ const Row = ({ problem }) => {
       } `}
     >
       <div className="w-[43px] flex items-center">
-        <Checkbox checked={isChecked} onChange={setIsChecked} />
+        <Checkbox checked={isChecked} 
+        onChange={setIsChecked} 
+        parentProgress={parentProgress} 
+        setParentProgress={setParentProgress}
+        actualSize={actualSize}
+        setActualSize={setActualSize}
+        maxSize={maxSize}
+        setMaxSize={setMaxSize} />
       </div>
 
       <div className="flex gap-52 w-[780px] items-center">

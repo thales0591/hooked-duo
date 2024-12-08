@@ -1,14 +1,29 @@
 import PropTypes from "prop-types";
 
 
-const Checkbox = ({ checked, onChange }) => {
+const Checkbox = ({ checked, onChange, parentProgress, setParentProgress, actualSize, setActualSize, maxSize, setMaxSize }) => {
+
+  let percent = 100 / maxSize;
+
+  const handleChecked = (e) => {
+    onChange(e.target.checked)
+    if (!checked) {
+      setActualSize(actualSize + 1)
+      setParentProgress(parentProgress + percent)
+    } else {
+      setActualSize(actualSize - 1)
+      setParentProgress(parentProgress - percent)
+    }
+
+  }
+
   return (
     <label className="relative flex items-center cursor-pointer box-border w-[43px] justify-center">
       <input
         type="checkbox"
         className="hidden"
         checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={(e) => handleChecked(e)}
       />
       <div
         className={`w-6 h-6 border-2 rounded border-gray-400 flex items-center justify-center transition-all ${
