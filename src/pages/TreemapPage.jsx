@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Row from "../components/Row";
-import LeafCard from "../components/LeafCard";
 import DynamicModal from "../components/DynamicModal";
+import LeafCard from "../components/LeafCard";
+import { useModalContext } from "../context/ModalContext";
 
 function TreemapPage() {
   const [scale, setScale] = useState(1);
@@ -54,32 +54,17 @@ function TreemapPage() {
   // verde claro: #2DEBB1
   // verde escuro: #0A3A2E
 
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen, title } = useModalContext();
 
-  const [contentStack, setContentStack] = useState([]);
-  const [title, setTitle] = useState("");
-  const [maxSize, setMaxSize] = useState(0);
-  const [actualSize, setActualSize] = useState(0);
+  const [activeModal, setActiveModal] = useState(null); // Controla qual modal está ativo
 
-  const handleDynamicSidebar = (leafTitle, leafMaxSize, content) => {
-    setTitle(leafTitle);
-    setMaxSize(leafMaxSize);
-    setContentStack(content);
-    setIsOpen(!isOpen);
-  };
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // Cálculo da barra pai (média ou soma, dependendo da lógica desejada)
-  const [parentProgress, setParentProgress] = useState(0); // Limita a 100%
-  
+  const openModal = (id) => setActiveModal(id);
+  const closeModal = () => setActiveModal(null);
 
   return (
     <>
       <div
-        className="flex justify-start items-center h-screen bg-[#151435] overflow-hidden "
+        className="flex justify-start items-center h-screen bg-[#151435] overflow-hidden"
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -92,150 +77,69 @@ function TreemapPage() {
         }}
       >
         <div className="flex flex-col gap-16  items-center text-white text-center font-roboto font-medium ">
-          
-              <LeafCard data={{
-                leafTitle: "Arrays & hashing", 
-                leafMaxSize: 9, 
-                content: [
-                { title: "Contains Duplicate", difficulty: "Easy" },
-                { title: "Valid Anagram", difficulty: "Easy" },
-                { title: "Two Sum ", difficulty: "Easy" },
-                { title: "Group Anagrams", difficulty: "Medium" },
-                { title: "Top K Frequent Elements", difficulty: "Medium" },
-                { title: "Encode and Decode String", difficulty: "Medium" },
-                { title: "Product of Array Except Self ",difficulty: "Medium"},
-                { title: "Valid Sudoku ", difficulty: "Medium" },
-                { title: "Longest Consecutive Sequence ", difficulty: "Hard" }
-              ]
-            }} handleDynamicSidebar={handleDynamicSidebar} />
-            
-          {/* <div className="grid grid-cols-2 gap-10">
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Two pointers", 5, [
-                  { title: "Valid Palindrome", difficulty: "Easy" },
-                  {
-                    title: "Two Sum II Input Array Is Sorted",
-                    difficulty: "Medium",
-                  },
-                  { title: "3Sum", difficulty: "Medium" },
-                  { title: "Container With Most Water", difficulty: "Medium" },
-                  { title: "Trapping Rain Water", difficulty: "Hard" },
-                ])
-              }
-            >
-              <button>Two pointers</button>
-            </div>
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Stack", 3, [
-                  { title: "Valid Parentheses", difficulty: "Easy" },
-                  { title: "Min Stack", difficulty: "Medium" },
-                  {
-                    title: "Evaluate Reverse Polish Notation",
-                    difficulty: "Medium",
-                  },
-                ])
-              }
-            >
-              <button>Stack</button>
-            </div>
+          <LeafCard
+            leafTitle={"Arrays & hashing"}
+            modal={() => openModal("modal1")}
+          />
+
+          <div className="grid grid-cols-2 gap-10">
+            <LeafCard
+              leafTitle={"Two pointers"}
+              modal={() => openModal("modal2")}
+            />
+            <LeafCard leafTitle={"Stack"} modal={() => openModal("modal3")} />
           </div>
 
           <div className="grid grid-cols-3 gap-10">
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Bynary search", 3, [
-                  { title: "Binary Search", difficulty: "Easy" },
-                  { title: "Search a 2D Matrix", difficulty: "Medium" },
-                  { title: "Koko Eating Bananas", difficulty: "Medium" },
-                ])
-              }
-            >
-              <button>Bynary search</button>
-            </div>
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Sliding window", 3, [
-                  {
-                    title: "Best Time to Buy And Sell Stock",
-                    difficulty: "Easy",
-                  },
-                  {
-                    title: "Longest Substring Without Repeating Characters",
-                    difficulty: "Medium",
-                  },
-                  {
-                    title: "Longest Repeating Character Replacement",
-                    difficulty: "Medium",
-                  },
-                ])
-              }
-            >
-              <button>Sliding window</button>
-            </div>
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Linked list", 3, [
-                  { title: "Reverse Linked List", difficulty: "Easy" },
-                  { title: "Merge Two Sorted Lists", difficulty: "Medium" },
-                  { title: "Reorder List", difficulty: "Medium" },
-                ])
-              }
-            >
-              <button>Linked list</button>
+            <LeafCard
+              leafTitle={"Binray search"}
+              modal={() => openModal("modal4")}
+            />
+            <LeafCard
+              leafTitle={"Sliding window"}
+              modal={() => openModal("modal5")}
+            />
+            <LeafCard
+              leafTitle={"Linked list"}
+              modal={() => openModal("modal6")}
+            />
+          </div>
+          <div className="grid grid-cols-4 gap-10">
+            <div className="col-start-2">
+              <LeafCard leafTitle={"Trees"} modal={() => openModal("modal7")} />
             </div>
           </div>
 
           <div className="grid grid-cols-4 gap-10">
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-2 cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Trees", 3, [
-                  { title: "Invert Binary Tree", difficulty: "Easy" },
-                  { title: "Maximum Depth of Binary Tree", difficulty: "Easy" },
-                  { title: "Diameter of Binary Tree", difficulty: "Easy" },
-                ])
-              }
-            >
-              <button>Trees</button>
+            <div className="col-start-1 ">
+              <LeafCard leafTitle={"Tries"} modal={() => openModal("modal8")} />
+            </div>
+            <div className="col-start-4">
+              <LeafCard
+                leafTitle={"Backtracking"}
+                modal={() => openModal("modal9")}
+              />
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-10">
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-1 cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Tries", 3, [
-                  { title: "Implement Trie Prefix Tree", difficulty: "Medium" },
-                  {
-                    title: "Design Add And Search Words Data Structure",
-                    difficulty: "Medium",
-                  },
-                  { title: "Word Search II", difficulty: "Hard" },
-                ])
-              }
-            >
-              <button>Tries</button>
+          <div className="grid grid-cols-5 place-items-center gap-10">
+          <div className="col-start-2 ">
+              <LeafCard leafTitle={"Heap"} modal={() => openModal("modal10")} />
             </div>
-            <div
-              className="bg-[#5316CC] w-48 h-16 rounded-xl col-start-4 cursor-pointer"
-              onClick={() =>
-                handleDynamicSidebar("Backtracking", 3, [
-                  { title: "Subsets", difficulty: "Medium" },
-                  { title: "Combination Sum", difficulty: "Medium" },
-                  { title: "Permutations", difficulty: "Medium" },
-                ])
-              }
-            >
-              <button>Backtracking</button>
+            <div className="col-start-4">
+              <LeafCard
+                leafTitle={"Graphs"}
+                modal={() => openModal("modal11")}
+              />
+            </div>
+            <div className="col-start-5">
+              <LeafCard
+                leafTitle={"1D DP"}
+                modal={() => openModal("modal12")}
+              />
             </div>
           </div>
+          {/* 
 
           <div className="grid grid-cols-5 place-items-center gap-10">
             <div
@@ -370,88 +274,214 @@ function TreemapPage() {
         <p className="p-4">progress bar aq man</p>
       </div>
 
-      <DynamicModal 
-    isOpen={isOpen} 
-    toggleSidebar={toggleSidebar} 
-    title={data.leafTitle} 
-    actualSize={ actualSize }
-    maxSize={maxSize }
-    parentProgress={parentProgress}
-    data={data}/>
+      <DynamicModal
+        data={{
+          leafTitle: "Arrays & hashing",
+          leafMaxSize: 9,
+          content: [
+            { title: "Contains Duplicate", difficulty: "Easy" },
+            { title: "Valid Anagram", difficulty: "Easy" },
+            { title: "Two Sum ", difficulty: "Easy" },
+            { title: "Group Anagrams", difficulty: "Medium" },
+            { title: "Top K Frequent Elements", difficulty: "Medium" },
+            { title: "Encode and Decode String", difficulty: "Medium" },
+            { title: "Product of Array Except Self ", difficulty: "Medium" },
+            { title: "Valid Sudoku ", difficulty: "Medium" },
+            { title: "Longest Consecutive Sequence ", difficulty: "Hard" },
+          ],
+        }}
+        isOpen={activeModal === "modal1"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-      {/* <div className="relative">
-        <div
-          className={`fixed inset-0 bg-black bg-opacity-50 
-              ${
-                isOpen
-                  ? "opacity-100 pointer-events-auto"
-                  : "opacity-0 pointer-events-none"
-              }`}
-          onClick={() => toggleSidebar()}
-        ></div>
-        <div
-          className={`fixed top-0 right-0 h-full w-3/4 bg-[#26236b] shadow-lg transform text-white transition-transform duration-300 ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <div className="flex flex-col items-center font-semibold">
-            <h1 className="text-3xl pt-5">{title}</h1>
+      <DynamicModal
+        data={{
+          leafTitle: "Two pointers",
+          leafMaxSize: 5,
+          content: [
+            { title: "Valid Palindrome", difficulty: "Easy" },
+            {
+              title: "Two Sum II Input Array Is Sorted",
+              difficulty: "Medium",
+            },
+            { title: "3Sum", difficulty: "Medium" },
+            { title: "Container With Most Water", difficulty: "Medium" },
+            { title: "Trapping Rain Water", difficulty: "Hard" },
+          ],
+        }}
+        isOpen={activeModal === "modal2"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-        
-            <h1 className="mt-6 mb-2">
-              ( {actualSize} / {maxSize} )
-            </h1>
-            <div className="mb-6 w-full flex justify-center">
-              <div className="w-1/3 bg-gray-300 rounded-full">
-                <div
-                  className={`bg-[#28ca99] h-3 rounded-full transition-all duration-300`}
-                  style={{
-                    width: parentProgress > 0 ? `${parentProgress}%` : "0",
-                  }}
-                ></div>
-              </div>
-            </div>
+      <DynamicModal
+        data={{
+          leafTitle: "Stack",
+          leafMaxSize: 3,
+          content: [
+            { title: "Valid Parentheses", difficulty: "Easy" },
+            { title: "Min Stack", difficulty: "Medium" },
+            {
+              title: "Evaluate Reverse Polish Notation",
+              difficulty: "Medium",
+            },
+          ],
+        }}
+        isOpen={activeModal === "modal3"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-            <h1>pre requisites</h1>
+      <DynamicModal
+        data={{
+          leafTitle: "Bynary search",
+          leafMaxSize: 3,
+          content: [
+            { title: "Binary Search", difficulty: "Easy" },
+            { title: "Search a 2D Matrix", difficulty: "Medium" },
+            { title: "Koko Eating Bananas", difficulty: "Medium" },
+          ],
+        }}
+        isOpen={activeModal === "modal4"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-            <div className="w-[90%]">
-              <div className="flex flex-row mt-10 justify-around w-full border-b-2 pb-2 border-gray-500 ">
-                <div className="w-[43px]">
-                  <h1>Status</h1>
-                </div>
+      <DynamicModal
+        data={{
+          leafTitle: "Sliding window",
+          leafMaxSize: 3,
+          content: [
+            {
+              title: "Best Time to Buy And Sell Stock",
+              difficulty: "Easy",
+            },
+            {
+              title: "Longest Substring Without Repeating Characters",
+              difficulty: "Medium",
+            },
+            {
+              title: "Longest Repeating Character Replacement",
+              difficulty: "Medium",
+            },
+          ],
+        }}
+        isOpen={activeModal === "modal5"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-                <div className="flex gap-52 w-[780px]">
-                  <div className="w-[30px] justify-center">
-                    <h1>Star</h1>
-                  </div>
-                  <h1 className="w-64">Problem</h1>
-                  <h1 className="w-[65px]">Difficulty</h1>
-                </div>
+      <DynamicModal
+        data={{
+          leafTitle: "Linked list",
+          leafMaxSize: 3,
+          content: [
+            { title: "Reverse Linked List", difficulty: "Easy" },
+            { title: "Merge Two Sorted Lists", difficulty: "Medium" },
+            { title: "Reorder List", difficulty: "Medium" },
+          ],
+        }}
+        isOpen={activeModal === "modal6"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-                <div className="w-[60px]">
-                  <h1>Solution</h1>
-                </div>
-              </div>
+      <DynamicModal
+        data={{
+          leafTitle: "Trees",
+          leafMaxSize: 3,
+          content: [
+            { title: "Invert Binary Tree", difficulty: "Easy" },
+            { title: "Maximum Depth of Binary Tree", difficulty: "Easy" },
+            { title: "Diameter of Binary Tree", difficulty: "Easy" },
+          ],
+        }}
+        isOpen={activeModal === "modal7"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-              {contentStack.length > 0 &&
-                contentStack.map((item, index) => (
-                  <Row
-                    key={index}
-                    problem={item}
-                    parentProgress={parentProgress}
-                    setParentProgress={setParentProgress}
-                    actualSize={actualSize}
-                    setActualSize={setActualSize}
-                    maxSize={maxSize}
-                    setMaxSize={setMaxSize}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-      </div> */}
+      <DynamicModal
+        data={{
+          leafTitle: "Tries",
+          leafMaxSize: 3,
+          content: [
+            { title: "Implement Trie Prefix Tree", difficulty: "Medium" },
+            {
+              title: "Design Add And Search Words Data Structure",
+              difficulty: "Medium",
+            },
+            { title: "Word Search II", difficulty: "Hard" },
+          ],
+        }}
+        isOpen={activeModal === "modal8"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
 
-      
+      <DynamicModal
+        data={{
+          leafTitle: "Backtracking",
+          leafMaxSize: 3,
+          content: [
+            { title: "Subsets", difficulty: "Medium" },
+            { title: "Combination Sum", difficulty: "Medium" },
+            { title: "Permutations", difficulty: "Medium" },
+          ],
+        }}
+        isOpen={activeModal === "modal9"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
+
+<DynamicModal
+        data={{
+          leafTitle: "Heap",
+          leafMaxSize: 3,
+          content:[
+            {
+              title: "Kth Largest Element In a Stream",
+              difficulty: "Easy",
+            },
+            { title: "Last Stone Weight", difficulty: "Easy" },
+            { title: "K Closest Points to Origin", difficulty: "Medium" },
+          ],
+        }}
+        isOpen={activeModal === "modal10"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
+
+<DynamicModal
+        data={{
+          leafTitle: "Graphs",
+          leafMaxSize: 3,
+          content:[
+            { title: "Number of Islands", difficulty: "Medium" },
+            { title: "Max Area of Island", difficulty: "Medium" },
+            { title: "Clone Graph", difficulty: "Medium" },
+          ],
+        }}
+        isOpen={activeModal === "modal11"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
+
+<DynamicModal
+        data={{
+          leafTitle: "1D DP",
+          leafMaxSize: 3,
+          content:[
+            { title: "Climbing Stairs", difficulty: "Easy" },
+            { title: "Min Cost Climbing Stairs", difficulty: "Easy" },
+            { title: "House Robber", difficulty: "Medium" },
+          ],
+        }}
+        isOpen={activeModal === "modal12"}
+        onClose={closeModal}
+        activeModal={activeModal}
+      />
     </>
   );
 }
