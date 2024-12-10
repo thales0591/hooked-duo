@@ -3,8 +3,16 @@ import Checkbox from "./Checkbox";
 import Star from "./Star";
 import PropTypes from "prop-types";
 import { FaVideo } from 'react-icons/fa';
+import { useModalContext } from "../context/ModalContext"
 
-const Row = ({ problem, parentProgress, setParentProgress, actualSize, setActualSize, maxSize, setMaxSize }) => {
+const Row = ({ problem }) => {
+  const {
+    isOpen, setIsOpen, 
+    contentStack, setContentStack, 
+    title, setTitle, 
+    maxSize, setMaxSize, 
+    actualSize, setActualSize,
+    parentProgress, setParentProgress} = useModalContext();
   const [isChecked, setIsChecked] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   return (

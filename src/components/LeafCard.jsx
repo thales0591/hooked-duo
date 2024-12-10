@@ -1,25 +1,17 @@
-import { useState } from "react";
-import DynamicModal from "./DynamicModal";
+import { useModalContext } from "../context/ModalContext"
 
-const LeafCard = ({data}, handleDynamicSidebar) => {
- 
-
- 
+const LeafCard = ({ leafTitle, modal }) => {
+  const {setTitle, setMaxSize, setContentStack } = useModalContext();
 
  
+
   return (
-    <>
     <div
       className="bg-[#5316CC] w-48 h-16 rounded-xl cursor-pointer"
-      onClick={() =>
-        handleDynamicSidebar(data)
-      }
+      onClick={() => modal()}
     >
-      <button>{data.leafTitle}</button>
+      <button>{leafTitle}</button>
     </div>
-
-    
-    </> 
   );
 };
 
