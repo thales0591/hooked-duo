@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { createContext, useContext, useState } from "react";
 
 export const ModalContext = createContext();
@@ -8,7 +9,8 @@ export const ModalContextProvider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [maxSize, setMaxSize] = useState(0);
   const [actualSize, setActualSize] = useState(0);
-  const [parentProgress, setParentProgress] = useState(0);
+  const [currentProgress, setCurrentProgress] = useState(0);
+  const [currentProgressNumber, setCurrentProgressNumber] = useState(0);
 
   return (
     <ModalContext.Provider
@@ -23,13 +25,19 @@ export const ModalContextProvider = ({ children }) => {
         setMaxSize,
         actualSize,
         setActualSize,
-        parentProgress,
-        setParentProgress,
+        currentProgress,
+        setCurrentProgress,
+        currentProgressNumber,
+        setCurrentProgressNumber,
       }}
     >
       {children}
     </ModalContext.Provider>
   );
+};
+
+ModalContextProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export const useModalContext = () => {

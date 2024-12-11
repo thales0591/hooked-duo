@@ -1,21 +1,42 @@
 import PropTypes from "prop-types";
+import { useModalContext } from "../context/ModalContext";
 
-
-const Checkbox = ({ checked, onChange, parentProgress, setParentProgress, actualSize, setActualSize, maxSize, setMaxSize }) => {
-
+const Checkbox = ({
+  checked,
+  onChange,
+  parentProgress,
+  setParentProgress,
+  actualSize,
+  setActualSize,
+  maxSize,
+  leafProgress,
+  setLeafProgress,
+}) => {
+  const {
+    currentProgress,
+    setCurrentProgress,
+    currentProgressNumber,
+    setCurrentProgressNumber,
+  } = useModalContext();
   let percent = 100 / maxSize;
+  let currentProgressPercent = 100 / 65;
 
   const handleChecked = (e) => {
-    onChange(e.target.checked)
+    onChange(e.target.checked);
     if (!checked) {
-      setActualSize(actualSize + 1)
-      setParentProgress(parentProgress + percent)
+      setActualSize(actualSize + 1);
+      setParentProgress(parentProgress + percent);
+      setCurrentProgress(currentProgress + currentProgressPercent);
+      setCurrentProgressNumber(currentProgressNumber + 1);
+      setLeafProgress(leafProgress + percent);
     } else {
-      setActualSize(actualSize - 1)
-      setParentProgress(parentProgress - percent)
+      setActualSize(actualSize - 1);
+      setParentProgress(parentProgress - percent);
+      setCurrentProgress(currentProgress - currentProgressPercent);
+      setCurrentProgressNumber(currentProgressNumber - 1);
+      setLeafProgress(leafProgress - percent);
     }
-
-  }
+  };
 
   return (
     <label className="relative flex items-center cursor-pointer box-border w-[43px] justify-center">
@@ -54,7 +75,13 @@ const Checkbox = ({ checked, onChange, parentProgress, setParentProgress, actual
 Checkbox.propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
+  parentProgress: PropTypes.number,
+  setParentProgress: PropTypes.func,
+  actualSize: PropTypes.number,
+  setActualSize: PropTypes.func,
+  maxSize: PropTypes.number,
+  leafProgress: PropTypes.number,
+  setLeafProgress: PropTypes.func,
 };
-
 
 export default Checkbox;
